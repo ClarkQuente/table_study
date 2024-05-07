@@ -18,6 +18,7 @@ function generateButton() {
 
     account.innerText = `A conta é ${number} x ${multiplication}`
     buttons.innerHTML = ''
+    buttonContinue.innerHTML = ''
 
     let wrongList = []
     let correctIndex = sortBetween(0, 2)
@@ -68,7 +69,6 @@ function checkResponse(number) {
             generateButton()
 
             result.innerText = ''
-            buttonContinue.innerHTML = ''
         }
 
         buttonContinue.appendChild(continueButton)
