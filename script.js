@@ -20,7 +20,7 @@ function generateButton() {
     buttons.innerHTML = ''
     buttonContinue.innerHTML = ''
 
-    let wrongList = []
+    let passed = 0
     let correctIndex = sortBetween(0, 2)
     for(let i = 0; i <= 2; i++) {
         
@@ -36,12 +36,26 @@ function generateButton() {
             buttons.appendChild(correctButton)
             continue
         }
+        
+        let checker = passed;
+        if(checker == 0) 
+            passed = sortBetween(0, 1) == 0 ? -1 : 1
+        
+        let toIncrease
+        if(checker == 0)
+            toIncrease = passed == -1 ? 1 : -1
+        else
+            toIncrease = passed
 
-        let wrongMultiplier = sortBetween(1, 10)
-        while(wrongMultiplier == multiplication || wrongList.includes(wrongMultiplier)) {
-            wrongMultiplier = sortBetween(1, 10)
+        let wrongMultiplier = multiplication + toIncrease
+        switch(wrongMultiplier) {
+            case -1:
+                wrongMultiplier = 2
+                break
+            case 11:
+                wrongMultiplier = 8
+                break
         }
-        wrongList.push(wrongMultiplier)
 
         let wrongResult = number * wrongMultiplier
 
