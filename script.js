@@ -20,7 +20,8 @@ function generateButton() {
     buttons.innerHTML = ''
     buttonContinue.innerHTML = ''
 
-    let passed = 0
+    let wrongList = []
+    let action = sortAction(multiplication)
     let correctIndex = sortBetween(0, 2)
     for(let i = 0; i <= 2; i++) {
         
@@ -36,27 +37,8 @@ function generateButton() {
             buttons.appendChild(correctButton)
             continue
         }
-        
-        let checker = passed;
-        if(checker == 0) 
-            passed = sortBetween(0, 1) == 0 ? -1 : 1
-        
-        let toIncrease
-        if(checker == 0)
-            toIncrease = passed == -1 ? 1 : -1
-        else
-            toIncrease = passed
 
-        let wrongMultiplier = multiplication + toIncrease
-        switch(wrongMultiplier) {
-            case -1:
-                wrongMultiplier = 2
-                break
-            case 11:
-                wrongMultiplier = 8
-                break
-        }
-
+        let wrongMultiplier = sortWrongMultiplier(wrongList, action, multiplication)
         let wrongResult = number * wrongMultiplier
 
         let wrongButton = document.createElement('button')
@@ -87,6 +69,57 @@ function checkResponse(number) {
 
         buttonContinue.appendChild(continueButton)
     }
+}
+
+function sortAction(correctMultiplier) {
+
+    /*
+     * Actions: 
+     * 
+     * 1- 2 Bottom
+     * 2- Mid
+     * 3- 2 Upper
+    */
+    let action = sortBetween(1, 3)
+    switch(correctMultiplier) {
+        case 0:
+            action = 3
+            break
+        case 1:
+            if(action == 1)
+                action = sortBetween(2, 3)
+            break
+        case 9:
+            if(action == 3)
+                action = sortBetween(1, 2)
+            break
+        case 10:
+            action = 1
+            break
+    }
+
+    return action
+}
+
+function sortWrongMultiplier(wrongList, action, correctMultiplier) {
+    let wrong = null;
+
+    while(wrong == null || wrong == correctMultiplier || wrongList.includes(wrong)) {
+        switch(action) {
+            case 1:
+                wrong = sortBetween(correctMultiplier - 2, correctMultiplier)
+                break
+            case 2:
+                wrong = sortBetween(correctMultiplier - 1, correctMultiplier + 1)
+                break
+            case 3:
+                wrong = sortBetween(correctMultiplier, correctMultiplier + 2)
+                break
+        }
+    }
+
+    wrongList.push(wrong)
+    return wrong
 }
 
 function sortBetween(min, max) {
