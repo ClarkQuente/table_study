@@ -5,14 +5,29 @@
     font-family: sans-serif;
 }
 
+body {
+    height: 100vh;
+    background: linear-gradient(to left top, #FF1493, #FF00FF);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 #container {
     width: 80%;
-    margin: 10% auto 0;
+    margin: 0 auto;
     text-align: center;
     border-radius: 24px;
     padding: 15px;
+    background-color: white;
 
     border: 1px solid #c3c3c3;
+}
+
+#container > img {
+    position: absolute;
+    margin: -45px 100px;
 }
 
 #numbers {
